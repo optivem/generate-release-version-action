@@ -1,5 +1,10 @@
 name: 'Generate Release Version'
 description: 'Converts prerelease version to release version by removing prerelease suffix'
+author: 'Optivem'
+
+branding:
+  icon: 'tag'
+  color: 'blue'
 
 inputs:
   prerelease-version:
