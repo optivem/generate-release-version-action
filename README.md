@@ -25,7 +25,7 @@ name: Convert Prerelease to Release
 on:
   workflow_dispatch:
     inputs:
-      prerelease_version:
+      prerelease-version:
         description: 'Prerelease version to convert'
         required: true
         type: string
@@ -38,11 +38,11 @@ jobs:
         id: generate-version
         uses: optivem/generate-release-version-action@v1
         with:
-          prerelease-version: ${{ inputs.prerelease_version }}
+          prerelease-version: ${{ inputs.prerelease-version }}
       
       - name: Display Result
         run: |
-          echo "Original version: ${{ inputs.prerelease_version }}"
+          echo "Original version: ${{ inputs.prerelease-version }}"
           echo "Release version: ${{ steps.generate-version.outputs.version }}"
 ```
 
