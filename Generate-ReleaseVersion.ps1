@@ -29,9 +29,9 @@ try {
     Write-Host "✅ Generated release version: $releaseVersion" -ForegroundColor Green
     
     # Set output
-    Write-Output "release-version=$releaseVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+    Write-Output "version=$releaseVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
     
-    Write-Host "📤 Output parameter set: release-version=$releaseVersion" -ForegroundColor Yellow
+    Write-Host "📤 Output parameter set: version=$releaseVersion" -ForegroundColor Yellow
 }
 catch {
     Write-Host "❌ Error generating production version: $($_.Exception.Message)" -ForegroundColor Red

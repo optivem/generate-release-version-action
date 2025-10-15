@@ -1,0 +1,91 @@
+name: Test Action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      test_version:
+        description: 'Test version to convert'
+        required: false
+        default: 'v1.0.4-rc1'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test Generate Release Version Action
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Test with default version
+        id: test-default
+        uses: ./
+        with:
+          prerelease-version: 'v1.0.4-rc1'
+      
+      - name: Test with alpha version
+        id: test-alpha
+        uses: ./
+        with:
+          prerelease-version: 'v2.1.0-alpha3'
+      
+      - name: Test with beta version
+        id: test-beta
+        uses: ./
+        with:
+          prerelease-version: '3.2.1-beta'
+      
+      - name: Test with preview version
+        id: test-preview
+        uses: ./
+        with:
+          prerelease-version: 'v4.0.0-preview2'
+      
+      - name: Test with workflow input
+        id: test-input
+        if: github.event_name == 'workflow_dispatch'
+        uses: ./
+        with:
+          prerelease-version: ${{ inputs.test_version }}
+      
+      - name: Display Results
+        run: |
+          echo "Test Results:"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🧪 v1.0.4-rc1     → ${{ steps.test-default.outputs.release-version }}"
+          echo "🧪 v2.1.0-alpha3  → ${{ steps.test-alpha.outputs.release-version }}"
+          echo "🧪 3.2.1-beta     → ${{ steps.test-beta.outputs.release-version }}"
+          echo "🧪 v4.0.0-preview2 → ${{ steps.test-preview.outputs.release-version }}"
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "🧪 ${{ inputs.test_version }} → ${{ steps.test-input.outputs.release-version }}"
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      
+      - name: Verify Results
+        run: |
+          # Verify expected outputs
+          if [ "${{ steps.test-default.outputs.release-version }}" != "v1.0.4" ]; then
+            echo "❌ Test failed for v1.0.4-rc1: expected v1.0.4, got ${{ steps.test-default.outputs.release-version }}"
+            exit 1
+          fi
+          
+          if [ "${{ steps.test-alpha.outputs.release-version }}" != "v2.1.0" ]; then
+            echo "❌ Test failed for v2.1.0-alpha3: expected v2.1.0, got ${{ steps.test-alpha.outputs.release-version }}"
+            exit 1
+          fi
+          
+          if [ "${{ steps.test-beta.outputs.release-version }}" != "3.2.1" ]; then
+            echo "❌ Test failed for 3.2.1-beta: expected 3.2.1, got ${{ steps.test-beta.outputs.release-version }}"
+            exit 1
+          fi
+          
+          if [ "${{ steps.test-preview.outputs.release-version }}" != "v4.0.0" ]; then
+            echo "❌ Test failed for v4.0.0-preview2: expected v4.0.0, got ${{ steps.test-preview.outputs.release-version }}"
+            exit 1
+          fi
+          
+          echo "✅ All tests passed successfully!"

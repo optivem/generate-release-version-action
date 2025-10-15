@@ -1,10 +1,5 @@
 name: 'Generate Release Version'
 description: 'Converts prerelease version to release version by removing prerelease suffix'
-author: 'Optivem'
-
-branding:
-  icon: 'tag'
-  color: 'blue'
 
 inputs:
   prerelease-version:
@@ -12,9 +7,9 @@ inputs:
     required: true
 
 outputs:
-  release-version:
+  version:
     description: 'Release version with prerelease suffix removed (e.g., v1.0.4)'
-    value: ${{ steps.convert-version.outputs.release-version }}
+    value: ${{ steps.convert-version.outputs.version }}
 
 runs:
   using: 'composite'
