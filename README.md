@@ -16,7 +16,7 @@ This action takes a prerelease version (like `v1.0.4-rc`, `v1.0.4-alpha`, `v1.0.
 
 | Output | Description | Example |
 |--------|-------------|---------|
-| `release-version` | Release version with prerelease suffix removed | `v1.0.4` |
+| `version` | Release version with prerelease suffix removed | `v1.0.4` |
 
 ## Usage
 
@@ -43,7 +43,7 @@ jobs:
       - name: Display Result
         run: |
           echo "Original version: ${{ inputs.prerelease_version }}"
-          echo "Release version: ${{ steps.generate-version.outputs.release-version }}"
+          echo "Release version: ${{ steps.generate-version.outputs.version }}"
 ```
 
 ## Examples
