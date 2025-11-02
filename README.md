@@ -1,5 +1,7 @@
 # Generate Release Version Action
 
+[![Test Action](https://github.com/optivem/generate-release-version-action/actions/workflows/test.yml/badge.svg)](https://github.com/optivem/generate-release-version-action/actions/workflows/test.yml)
+
 A GitHub Action that converts prerelease versions to release versions by removing prerelease suffixes.
 
 ## Description
