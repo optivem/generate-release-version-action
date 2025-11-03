@@ -2,6 +2,8 @@
 
 [![Test Action](https://github.com/optivem/generate-release-version-action/actions/workflows/test.yml/badge.svg)](https://github.com/optivem/generate-release-version-action/actions/workflows/test.yml)
 
+[![GitHub release](https://img.shields.io/github/release/optivem/generate-release-version-action.svg)](https://github.com/optivem/generate-release-version-action/releases)
+
 A GitHub Action that converts prerelease versions to release versions by removing prerelease suffixes.
 
 ## Description
